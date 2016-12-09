@@ -88,6 +88,9 @@ public class WebviewFragment extends Fragment {
 
         if (com.midtrans.sdk.uikit.BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
             setOtp("112233");
+        } else {
+            // Init SMS Catcher
+            initSmsCatcher();
         }
     }
 
@@ -104,9 +107,6 @@ public class WebviewFragment extends Fragment {
         }
         webView.setWebViewClient(new MidtransWebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
-
-        // Init SMS Catcher
-        initSmsCatcher();
     }
 
     @Override
