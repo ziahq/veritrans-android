@@ -20,6 +20,8 @@ import com.midtrans.sdk.corekit.BuildConfig;
 import com.midtrans.sdk.corekit.core.Logger;
 import com.midtrans.sdk.uikit.R;
 import com.midtrans.sdk.uikit.utilities.SdkUIFlowUtil;
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 public class WebviewFragment extends Fragment {
 
@@ -35,6 +37,9 @@ public class WebviewFragment extends Fragment {
     private String webUrl;
     private String type = "";
 
+    private SmsVerifyCatcher smsVerifyCatcher;
+
+
     public WebviewFragment() {
     }
 
@@ -42,6 +47,7 @@ public class WebviewFragment extends Fragment {
         WebviewFragment fragment = new WebviewFragment();
         Bundle args = new Bundle();
         args.putString(URL_PARAM, url);
+
 
         fragment.setArguments(args);
         return fragment;
@@ -79,19 +85,7 @@ public class WebviewFragment extends Fragment {
         webView.loadUrl(webUrl);
 
         if (com.midtrans.sdk.uikit.BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Auto fill with sandbox OTP value
-                    webView.loadUrl("javascript: {" +
-                            "document.getElementById('PaRes').value = '112233';" +
-                            "setTimeout(function(){" +
-                            "var form = document.getElementById('acsForm');" +
-                            "form.submit();" +
-                            "}, 1000); " +
-                            "};");
-                }
-            }, 2000);
+            setOtp("112233");
         }
     }
 
@@ -108,6 +102,9 @@ public class WebviewFragment extends Fragment {
         }
         webView.setWebViewClient(new MidtransWebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
+
+        // Init SMS Catcher
+        initSmsCatcher();
     }
 
     @Override
@@ -134,6 +131,29 @@ public class WebviewFragment extends Fragment {
                         "};");
             }
         }, 1000);
+    }
+
+    private void initSmsCatcher() {
+        //init SmsVerifyCatcher
+        smsVerifyCatcher = new SmsVerifyCatcher(getActivity(), new OnSmsCatchListener<String>() {
+            @Override
+            public void onSmsCatch(String message) {
+                String code = message;
+                setOtp(code);
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        smsVerifyCatcher.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        smsVerifyCatcher.onStart();
     }
 
     private class MidtransWebViewClient extends WebViewClient {

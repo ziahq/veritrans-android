@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.midtrans.sdk.uikit">
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <uses-sdk tools:overrideLibrary="com.stfalcon.smsverifycatcher" />
     <application
         android:allowBackup="true"
         android:theme="@style/VeritransAppTheme">
