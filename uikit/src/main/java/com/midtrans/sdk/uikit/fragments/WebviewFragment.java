@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,10 +73,26 @@ public class WebviewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         webView = (WebView) view.findViewById(R.id.webview);
         initwebview();
         webView.loadUrl(webUrl);
-        super.onViewCreated(view, savedInstanceState);
+
+        if (com.midtrans.sdk.uikit.BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Auto fill with sandbox OTP value
+                    webView.loadUrl("javascript: {" +
+                            "document.getElementById('PaRes').value = '112233';" +
+                            "setTimeout(function(){" +
+                            "var form = document.getElementById('acsForm');" +
+                            "form.submit();" +
+                            "}, 1000); " +
+                            "};");
+                }
+            }, 2000);
+        }
     }
 
     @SuppressLint("AddJavascriptInterface")
@@ -102,6 +119,21 @@ public class WebviewFragment extends Fragment {
             webView.clearHistory();
             webView.destroy();
         }
+    }
+
+    public void setOtp(final String otp) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                webView.loadUrl("javascript: {" +
+                        "document.getElementById('PaRes').value = '" + otp + "';" +
+                        "setTimeout(function(){" +
+                        "var form = document.getElementById('acsForm');" +
+                        "form.submit();" +
+                        "}, 1000); " +
+                        "};");
+            }
+        }, 1000);
     }
 
     private class MidtransWebViewClient extends WebViewClient {
