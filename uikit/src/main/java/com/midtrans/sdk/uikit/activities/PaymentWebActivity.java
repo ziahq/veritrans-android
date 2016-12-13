@@ -117,7 +117,7 @@ public class PaymentWebActivity extends BaseActivity {
             }
         });
 
-        smsVerifyCatcher.setFilter("CIMB Niaga: Paycode Anda adalah [0-9]+ utk transaksi di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+. Paycode berlaku selama [0-9]+ mnt.|From BCA: Your Authorisation code is [0-9]+ for the purchase at [a-zA-Z0-9 ]+, amount IDR [0-9.,]+. Valid for [0-9]+ mins.|Dari BNI: Kode Otorisasi utk transaksi Anda adalah [0-9]+ di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+.Kode Anda berlaku [0-9]+ mnt.");
+        smsVerifyCatcher.setFilter("CIMB Niaga: Paycode Anda adalah [0-9]+ utk transaksi di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+. Paycode berlaku selama [0-9]+ mnt.|From BCA: Your Authorisation code is [0-9]+ for the purchase at [a-zA-Z0-9 ]+, amount IDR [0-9.,]+. Valid for [0-9]+ mins.( Resend [0-9]+ of [0-9]+.)?|Dari BNI: Kode Otorisasi utk transaksi Anda adalah [0-9]+ di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+.Kode Anda berlaku [0-9]+ mnt.");
     }
 
     @Override
