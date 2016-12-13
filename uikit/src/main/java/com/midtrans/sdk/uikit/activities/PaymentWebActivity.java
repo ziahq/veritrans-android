@@ -3,18 +3,27 @@ package com.midtrans.sdk.uikit.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
+import com.midtrans.sdk.corekit.BuildConfig;
 import com.midtrans.sdk.corekit.core.Constants;
 import com.midtrans.sdk.uikit.R;
 import com.midtrans.sdk.uikit.fragments.WebviewFragment;
+import com.midtrans.sdk.uikit.utilities.SmsUtils;
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 public class PaymentWebActivity extends BaseActivity {
     private Toolbar toolbar;
     private String webUrl;
     private String type = "";
+
+    private SmsVerifyCatcher smsVerifyCatcher;
+    private WebviewFragment webviewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +42,26 @@ public class PaymentWebActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        WebviewFragment webviewFragment;
         if (!type.equals("")) {
             webviewFragment = WebviewFragment.newInstance(webUrl, type);
         } else {
             webviewFragment = WebviewFragment.newInstance(webUrl);
         }
         replaceFragment(webviewFragment, R.id.webview_container, true, false);
+
+        if (type != null && type.equalsIgnoreCase(WebviewFragment.TYPE_CREDIT_CARD)) {
+            if (BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        webviewFragment.setOtp("112233");
+                    }
+                }, 5000);
+            } else {
+                // Init SMS Catcher
+                initSmsCatcher();
+            }
+        }
     }
 
     @Override
@@ -83,4 +105,34 @@ public class PaymentWebActivity extends BaseActivity {
         dialog.show();
     }
 
+    private void initSmsCatcher() {
+        //init SmsVerifyCatcher
+        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
+            @Override
+            public void onSmsCatch(String message) {
+                String code = SmsUtils.getCodeFromMessage(message);
+                if (code != null && !TextUtils.isEmpty(code)) {
+                    webviewFragment.setOtp(code);
+                }
+            }
+        });
+
+        smsVerifyCatcher.setFilter("CIMB Niaga: Paycode Anda adalah [0-9]+ utk transaksi di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+. Paycode berlaku selama [0-9]+ mnt.|From BCA: Your Authorisation code is [0-9]+ for the purchase at [a-zA-Z0-9 ]+, amount IDR [0-9.,]+. Valid for [0-9]+ mins.|Dari BNI: Kode Otorisasi utk transaksi Anda adalah [0-9]+ di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+.Kode Anda berlaku [0-9]+ mnt.");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (smsVerifyCatcher != null) {
+            smsVerifyCatcher.onStart();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (smsVerifyCatcher != null) {
+            smsVerifyCatcher.onStop();
+        }
+    }
 }

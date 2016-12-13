@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +19,6 @@ import com.midtrans.sdk.corekit.BuildConfig;
 import com.midtrans.sdk.corekit.core.Logger;
 import com.midtrans.sdk.uikit.R;
 import com.midtrans.sdk.uikit.utilities.SdkUIFlowUtil;
-import com.midtrans.sdk.uikit.utilities.SmsUtils;
-import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
-import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 public class WebviewFragment extends Fragment {
 
@@ -38,9 +33,6 @@ public class WebviewFragment extends Fragment {
     public WebView webView;
     private String webUrl;
     private String type = "";
-
-    private SmsVerifyCatcher smsVerifyCatcher;
-
 
     public WebviewFragment() {
     }
@@ -85,13 +77,6 @@ public class WebviewFragment extends Fragment {
         webView = (WebView) view.findViewById(R.id.webview);
         initwebview();
         webView.loadUrl(webUrl);
-
-        if (com.midtrans.sdk.uikit.BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
-            setOtp("112233");
-        } else {
-            // Init SMS Catcher
-            initSmsCatcher();
-        }
     }
 
     @SuppressLint("AddJavascriptInterface")
@@ -121,45 +106,16 @@ public class WebviewFragment extends Fragment {
     }
 
     public void setOtp(final String otp) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                webView.loadUrl("javascript: {" +
-                        "document.getElementById('PaRes').value = '" + otp + "';" +
-                        "setTimeout(function(){" +
-                        "var form = document.getElementById('acsForm');" +
-                        "form.submit();" +
-                        "}, 1000); " +
-                        "};");
-            }
-        }, 1000);
-    }
-
-    private void initSmsCatcher() {
-        //init SmsVerifyCatcher
-        smsVerifyCatcher = new SmsVerifyCatcher(getActivity(), new OnSmsCatchListener<String>() {
-            @Override
-            public void onSmsCatch(String message) {
-                String code = SmsUtils.getCodeFromMessage(message);
-                if (code != null && !TextUtils.isEmpty(code)) {
-                    setOtp(code);
-                }
-            }
-        });
-
-        smsVerifyCatcher.setFilter("CIMB Niaga: Paycode Anda adalah [0-9]+ utk transaksi di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+. Paycode berlaku selama [0-9]+ mnt.|From BCA: Your Authorisation code is [0-9]+ for the purchase at [a-zA-Z0-9 ]+, amount IDR [0-9.,]+. Valid for [0-9]+ mins.|Dari BNI: Kode Otorisasi utk transaksi Anda adalah [0-9]+ di [a-zA-Z0-9 ]+ sebesar IDR [0-9.,]+.Kode Anda berlaku [0-9]+ mnt.");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        smsVerifyCatcher.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        smsVerifyCatcher.onStart();
+        webView.loadUrl("javascript: {" +
+                "var input = document.getElementById('PaRes');" +
+                "if(input) input.value = '" + otp + "';" +
+                "input = document.getElementById('otp');" +
+                "if(input) input.value = '" + otp + "';" +
+                "setTimeout(function(){" +
+                "var form = document.getElementsByTagName('FORM')[0];" +
+                "if(form) form.submit();" +
+                "}, 1000); " +
+                "};");
     }
 
     private class MidtransWebViewClient extends WebViewClient {
