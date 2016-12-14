@@ -3,6 +3,7 @@ package com.midtrans.sdk.uikit.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.midtrans.sdk.corekit.core.Constants;
 import com.midtrans.sdk.corekit.core.Logger;
+import com.midtrans.sdk.uikit.BuildConfig;
 import com.midtrans.sdk.uikit.R;
 import com.midtrans.sdk.uikit.fragments.WebviewFragment;
 import com.midtrans.sdk.uikit.utilities.SmsUtils;
@@ -51,8 +53,7 @@ public class PaymentWebActivity extends BaseActivity {
         replaceFragment(webviewFragment, R.id.webview_container, true, false);
 
         if (type != null && type.equalsIgnoreCase(WebviewFragment.TYPE_CREDIT_CARD)) {
-            initSmsCatcher();
-            /*if (BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
+            if (BuildConfig.FLAVOR.equalsIgnoreCase("development")) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -61,8 +62,8 @@ public class PaymentWebActivity extends BaseActivity {
                 }, 5000);
             } else {
                 // Init SMS Catcher
-                //initSmsCatcher();
-            }*/
+                initSmsCatcher();
+            }
         }
     }
 
