@@ -197,10 +197,10 @@ public class MainActivity extends AppCompatActivity implements TransactionFinish
             transactionRequestNew.setExpiry(expiryModel);
         }
 
-        Map<String, String> customMap = new HashMap<>();
-        customMap.put("flight_id", "JT-214");
-        customMap.put("airplane_type", "Boeing");
-        transactionRequestNew.setCustomObject(customMap);
+//        Map<String, String> customMap = new HashMap<>();
+//        customMap.put("flight_id", "JT-214");
+//        customMap.put("airplane_type", "Boeing");
+//        transactionRequestNew.setCustomObject(customMap);
 
         return transactionRequestNew;
     }
