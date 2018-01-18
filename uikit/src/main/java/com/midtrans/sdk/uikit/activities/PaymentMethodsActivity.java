@@ -137,6 +137,7 @@ public class PaymentMethodsActivity extends BaseActivity implements PaymentMetho
     private FancyButton buttonRetry;
     private AppBarLayout appbar;
     private boolean alreadyUtilized = false;
+    private long startRender  = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +175,7 @@ public class PaymentMethodsActivity extends BaseActivity implements PaymentMetho
                     SdkUIFlowUtil.saveUserDetails();
                 }
 
+                startRender = System.currentTimeMillis();
                 setUpPaymentMethods();
                 setupRecyclerView();
 
@@ -335,9 +337,16 @@ public class PaymentMethodsActivity extends BaseActivity implements PaymentMetho
                 return;
             }
 
+            final long starCheckout = System.currentTimeMillis();
+
+
+
             midtransSDK.checkout(userDetail.getUserId(), new CheckoutCallback() {
                 @Override
                 public void onSuccess(Token token) {
+                    long finishCheckout = System.currentTimeMillis();
+                    Log.d("xtestx" , "checkout>delta:" + (finishCheckout - starCheckout));
+
                     Log.i(TAG, "checkout token:" + token.getTokenId());
                     LocalDataHandler.saveString(Constants.AUTH_TOKEN, token.getTokenId());
                     getPaymentOptions(token.getTokenId());
@@ -411,9 +420,13 @@ public class PaymentMethodsActivity extends BaseActivity implements PaymentMetho
     }
 
     private void getPaymentOptions(String tokenId) {
+        final long startgetlist = System.currentTimeMillis();
         midtransSDK.getTransactionOptions(tokenId, new TransactionOptionsCallback() {
             @Override
             public void onSuccess(Transaction transaction) {
+                long finishgetlist = System.currentTimeMillis();
+                Log.d("xtestx" , "list>delta:" + (finishgetlist - startgetlist));
+
                 enableButtonBack(true);
                 showBackButton();
                 try {
@@ -459,6 +472,9 @@ public class PaymentMethodsActivity extends BaseActivity implements PaymentMetho
                     initPaymentMethods(transaction.getEnabledPayments());
 
                     initCustomTrackingProperties();
+
+                    long finishRender = System.currentTimeMillis();
+                    Log.d("xtestx" , "render>delta:" + (finishRender - startRender));
                 } catch (NullPointerException e) {
                     Logger.e(TAG, e.getMessage());
                 }
