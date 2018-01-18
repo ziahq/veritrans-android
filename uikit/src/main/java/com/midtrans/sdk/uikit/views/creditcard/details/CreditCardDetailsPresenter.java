@@ -3,6 +3,7 @@ package com.midtrans.sdk.uikit.views.creditcard.details;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.midtrans.sdk.corekit.callback.BankBinsCallback;
 import com.midtrans.sdk.corekit.callback.BanksPointCallback;
@@ -49,6 +50,7 @@ public class CreditCardDetailsPresenter extends BaseCreditCardPresenter<CreditCa
 
     private int installmentTotalPositions;
     private int installmentCurrentPosition;
+    private long startGetBankPoint = 0;
 
     public CreditCardDetailsPresenter(Context context, CreditCardDetailsView view) {
         super();
@@ -61,10 +63,14 @@ public class CreditCardDetailsPresenter extends BaseCreditCardPresenter<CreditCa
 
     private void fetchBankBins() {
         try {
+            final long startFetch = System.currentTimeMillis();
             getMidtransSDK().getBankBins(new BankBinsCallback() {
                 @Override
                 public void onSuccess(ArrayList<BankBinsResponse> response) {
                     creditCardTransaction.setBankBins(response);
+
+                    long finishFetch = System.currentTimeMillis();
+                    Log.d("xtestx", "fetchbank>delta:" + (finishFetch - startFetch));
                 }
 
                 @Override
@@ -354,10 +360,14 @@ public class CreditCardDetailsPresenter extends BaseCreditCardPresenter<CreditCa
 
 
     public void getBankPoint(final String bankType) {
+        startGetBankPoint = System.currentTimeMillis();
+
         if (creditCardToken != null) {
             getMidtransSDK().getBanksPoint(creditCardToken.getTokenId(), new BanksPointCallback() {
                 @Override
                 public void onSuccess(BanksPointResponse response) {
+                    long finish = System.currentTimeMillis();
+                    Log.d("xtestx", "getbankpoint>delta:" + (finish - startGetBankPoint));
                     creditCardTransaction.setBankPoint(response, bankType);
                     view.onGetBankPointSuccess(response);
                 }

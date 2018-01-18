@@ -48,6 +48,7 @@ public class WebViewPaymentActivity extends BasePaymentActivity {
     private String paymentType;
 
     private PaymentStatusPresenter presenter;
+    public static long startload3ds = 0;
 
     private static void showCancelConfirmationDialog(final WebViewPaymentActivity activity) {
         if (activity != null) {
@@ -140,6 +141,8 @@ public class WebViewPaymentActivity extends BasePaymentActivity {
 
     @SuppressLint("AddJavascriptInterface")
     private void initWebViewContainer() {
+        startload3ds = System.currentTimeMillis();
+
         webviewContainer.getSettings().setAllowFileAccess(false);
         webviewContainer.getSettings().setJavaScriptEnabled(true);
         webviewContainer.setInitialScale(1);
@@ -186,6 +189,7 @@ public class WebViewPaymentActivity extends BasePaymentActivity {
 
         private final String paymentType;
         private WebViewPaymentActivity activity;
+        private boolean atfirstime = true;
 
         private MidtransWebViewClient(WebViewPaymentActivity activity, String type) {
             this.paymentType = type;
@@ -207,6 +211,12 @@ public class WebViewPaymentActivity extends BasePaymentActivity {
                 if (url.contains(UiKitConstants.CALLBACK_PATTERN_3DS) || url.contains(UiKitConstants.CALLBACK_PATTERN_RBA)) {
                     finishWebViewPayment(activity, RESULT_OK);
                 }
+            }
+            long finish = System.currentTimeMillis();
+
+            if(atfirstime){
+                Log.d("xtestx" , "load3ds>delta:" + (finish - startload3ds));
+                atfirstime = false;
             }
         }
 

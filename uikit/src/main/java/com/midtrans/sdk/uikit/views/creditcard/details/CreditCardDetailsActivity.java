@@ -13,6 +13,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -108,6 +109,7 @@ public class CreditCardDetailsActivity extends BasePaymentActivity implements Cr
     private String redirectUrl = null;
     private float redeemedPoint = 0f;
     private int attempt = 0;
+    private long startGetCardToken = 0;
 
 
     @Override
@@ -602,6 +604,7 @@ public class CreditCardDetailsActivity extends BasePaymentActivity implements Cr
             String month = date.split("/")[0].trim();
             String year = "20" + date.split("/")[1].trim();
 
+            startGetCardToken = System.currentTimeMillis();
             presenter.startGettingCardToken(cardNumber, month, year, cvv, checkboxSaveCard.isChecked());
         }
     }
@@ -1245,6 +1248,8 @@ public class CreditCardDetailsActivity extends BasePaymentActivity implements Cr
 
     @Override
     public void onGetCardTokenSuccess(TokenDetailsResponse response) {
+        long finish = System.currentTimeMillis();
+        Log.d("xtestx" , "getcardtoken>delta:" + (finish - startGetCardToken));
         if (isActivityRunning()) {
             SdkUIFlowUtil.hideKeyboard(this);
 
