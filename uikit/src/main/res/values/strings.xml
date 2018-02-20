@@ -264,7 +264,7 @@
     <string name="indomaret_instruction_step1">After confirming your payment, we will issue you a unique Payment Code number.</string>
     <string name="indomaret_instruction_step2">Note down your Payment Code and total amount.
         Don\'t worry, we will also mail you a copy of the payment instructions.</string>
-    <string name="indomaret_instruction_step3">Go to an Indomaret store near you and provide the cashier with the Payment Code number.</string>
+    <string name="indomaret_instruction_step3">Go to an Indomaret store near you and provide the cashier with the Payment Code number or barcode to be scanned.</string>
     <string name="indomaret_instruction_step4">The cashier will then confirm the transaction by asking for the transaction amount and the merchant name.</string>
     <string name="indomaret_instruction_step5">Confirm the payment with the cashier.</string>
     <string name="indomaret_instruction_step6">Your transaction is successful! You should be receiving an email confirming your payment. Please keep your Indomaret payment receipt just in case you need help via support.</string>
@@ -529,10 +529,11 @@
     <string name="instruction_atm_bersama1">On the main menu, choose <b>Others</b>.</string>
     <string name="instruction_atm_bersama2">Choose <b>Transfer</b>.</string>
     <string name="instruction_atm_bersama3">Choose <b>Online Transfer</b>.</string>
-    <string name="instruction_atm_bersama4">Enter <b>013</b> and <b>16 digit Account No.</b> and press <b>Correct</b></string>
-    <string name="instruction_atm_bersama5">Enter the <b>full amount to be paid</b> and press <b>Correct</b>.</string>
+    <string name="instruction_atm_bersama4_permata">Enter <b>013</b> and <b>16 digit Account No.</b> and press <b>Correct</b>.</string>
+    <string name="instruction_atm_bersama4_bni">Enter <b>009</b> (Bank BNI code) and <b>16 digit Account No.</b> and press <b>Correct</b></string>
+    <string name="instruction_atm_bersama5">Enter the <b>full amount to be paid</b> and press <b>Correct</b>. If the amount entered is not the same as the invoiced amount, the transaction will be declined.</string>
     <string name="instruction_atm_bersama6">Empty the transfer reference number and press <b>Correct</b>.</string>
-    <string name="instruction_atm_bersama7">Your payment details will appear on the confirmation page. If the information is right press <b>Correct</b>.</string>
+    <string name="instruction_atm_bersama7">Amount to be paid, account number, and merchant name will appear on the payment confirmation page. If the information is right, press <b>Correct</b>.</string>
     <string name="pay_with_atm_bersama">Pay through ATM with ATM Bersama logo</string>
 
     <string name="preview_prima">Pay through <b>all bank ATMs with Prima logo</b></string>
@@ -542,10 +543,11 @@
     <string name="instruction_prima1">On the main menu, choose <b>Other Transaction</b>.</string>
     <string name="instruction_prima2">Choose <b>Transfer</b>.</string>
     <string name="instruction_prima3">Choose <b>Other Bank Account</b>.</string>
-    <string name="instruction_prima4">Enter <b>013</b> and choose <b>Correct</b>.</string>
-    <string name="instruction_prima5">Enter the full amount to be paid and press <b>Correct</b>.</string>
+    <string name="instruction_prima4_permata">Enter <b>013</b> and choose <b>Correct</b>.</string>
+    <string name="instruction_prima4_bni">Enter <b>009</b> (Bank BNI code) and choose <b>Correct</b>.</string>
+    <string name="instruction_prima5">Enter the full amount to be paid and press <b>Correct</b>. If the amount entered is not the same as the invoiced amount, the transaction will be declined.</string>
     <string name="instruction_prima6">Enter <b>16 digits payment Account No.</b> and press <b>Correct</b>.</string>
-    <string name="instruction_prima7">Your payment details will appear on the confirmation page. If the information is right, press <b>Correct</b>.</string>
+    <string name="instruction_prima7">Amount to be paid, account number, and merchant name will appear on the payment confirmation page. If the information is right, press <b>Correct</b>.</string>
     <string name="pay_with_prima">Pay through ATM with Prima logo</string>
 
     <string name="preview_alto">Pay through <b>all bank ATMs with Alto logo</b></string>
@@ -554,11 +556,17 @@
     <string name="bank_list_header_alto">Banks registered with Alto network</string>
     <string name="instruction_alto1">On the main menu, choose <b>Other Transaction</b>.</string>
     <string name="instruction_alto2">Choose <b>Payment</b>.</string>
+    <string name="instruction_alto2_bni">Choose <b>Transfer</b>.</string>
     <string name="instruction_alto3">Choose <b>Other Payment</b>.</string>
+    <string name="instruction_alto3_bni">Choose <b>Other Bank Account</b>.</string>
     <string name="instruction_alto4">Choose <b>Virtual Account</b>.</string>
+    <string name="instruction_alto4_bni">Enter <b>009</b> (Bank BNI code) and choose <b>Correct</b>.</string>
     <string name="instruction_alto5">Enter <b>16 digits payment Account No.</b> and press <b>Correct</b>.</string>
+    <string name="instruction_alto5_bni">Enter the full amount to be paid and press <b>Correct</b>. If the amount entered is not the same as the invoiced amount, the transaction will be declined.</string>
     <string name="instruction_alto6">Your payment details will appear on the confirmation page. If the information is right press <b>Correct</b>.</string>
+    <string name="instruction_alto6_bni">Enter <b>16 digits payment Account No.</b> and press <b>Correct</b>.</string>
     <string name="instruction_alto7">Choose your payment account.</string>
+    <string name="instruction_alto7_bni">Amount to be paid, account number, and merchant name will appear on the payment confirmation page. If the information is right, press <b>Correct</b>.</string>
     <string name="pay_with_alto">Pay through ATM with Alto logo</string>
 
     <string name="amex">AMEX</string>
@@ -590,22 +598,24 @@
 
     <!--Go-Pay Instruction-->
     <string name="gopay_instruction_step1">Tap <b>Pay Now with GO-PAY</b>.</string>
-    <string name="gopay_instruction_step2">You will be redirected to the <b>GO-JEK</b> app.</string>
-    <string name="gopay_instruction_step3">Check your payment details in the <b>GO-JEK</b> app then tap <b>PAY</b>.</string>
-    <string name="gopay_instruction_step4">Done.</string>
+    <string name="gopay_instruction_step2"><b>GO-JEK</b> app will open.</string>
+    <string name="gopay_instruction_step3">Check your payment details then tap <b>Pay</b> and your transaction is <b>Done</b>.</string>
 
     <!--Go-Pay Instruction in Tablet-->
     <string name="gopay_instruction_tablet_step1">Tap <b>Pay Now with GO-PAY</b>.</string>
-    <string name="gopay_instruction_tablet_step2">Open <b>GO-JEK</b> app on your phone.</string>
-    <string name="gopay_instruction_tablet_step3">Tap <b>SCAN QR</b>, then point your camera to the <b>QR Code</b>.</string>
-    <string name="gopay_instruction_tablet_step4">Check your payment details in <b>GO-JEK</b> app and then tap <b>PAY</b>.</string>
-    <string name="gopay_instruction_tablet_step5">Your transaction is done.</string>
+    <string name="gopay_instruction_tablet_step2"><b>QR code</b> will appear on the next page to be scanned.</string>
+    <string name="gopay_instruction_tablet_step3">Open <b>GO-JEK app</b> on your phone.</string>
+    <string name="gopay_instruction_tablet_step4">Tap <b>SCAN QR</b>.</string>
+    <string name="gopay_instruction_tablet_step5">Point your camera to the <b>QR Code</b>.</string>
+    <string name="gopay_instruction_tablet_step6">Check your payment details in <b>GO-JEK</b> app and then tap <b>Pay</b>.</string>
+    <string name="gopay_instruction_tablet_step7">Done.</string>
+    <string name="gopay_instruction_tablet_hint">Note: Scan QR button won\'t appear if your GO-PAY balance is less than Rp 10,000.</string>
 
     <!--Go-Pay related-->
     <string name="gopay_status_title">Pay with GO-PAY</string>
-    <string name="gopay_confirm_button">Pay Now with GO-PAY</string>
+    <string name="gopay_confirm_button">Pay Now with</string>
     <string name="notification_gojek_app">GO-JEK app is required for this payment method.</string>
-    <string name="notification_gojek_app_tablet">Please complete your <b>GO-PAY</b> payment via <b>GO-JEK</b> app.</string>
+    <string name="notification_gojek_app_tablet">Make sure you have installed <b>GO-JEK app</b> on your phone and have balance more than Rp 10,000.</string>
     <string name="install_gojek_message">Install GO-JEK App from Play Store</string>
     <string name="whoops" translatable="false">Whoops!</string>
     <string name="no_gojek_message">Unfortunately, we couldn\'t find GO-JEK app installed on your phone.</string>
@@ -617,7 +627,8 @@
     <string name="confirm_gopay_qr_scan_tablet">Make sure the QR code successfully scanned and payment has been completed within the GO-JEK app.</string>
     <string name="confirm_gopay_deeplink">Make sure payment has been completed within the GO-JEK app.</string>
     <string name="gopay_instruction">How to Pay?</string>
-    <string name="gopay_expiration_message">Please complete your payment before</string>
+    <string name="gopay_expiration_message">Please complete your payment in</string>
+    <string name="gopay_expiration_expired">Time\'s up.</string>
 
     <string name="error_message_invalid_input_telkomsel">Transaction failed. Your transaction got declined by T-Cash.</string>
     <string name="kioson">Kioson</string>
@@ -870,12 +881,6 @@
     <string name="validation_country_code_empty">Please enter country code</string>
     <string name="status_message_not_enabled">Payment method is not enabled</string>
     <string name="details_message_not_enabled">Sorry, payment method is not enabled</string>
-    <string name="hint_gopay_verification_number">Enter verification code</string>
-    <string name="verificaton_code_empty">Please enter verification code</string>
-    <string name="verification_code">Resend Verification Code</string>
-    <string name="resend_verification_code">Resending verification code</string>
-    <string name="resend_verification_code_success">Verification code already sent</string>
-    <string name="resend_verification_code_failure">Failed to resend verification code</string>
     <string name="gopay">GO-PAY</string>
     <string name="danamon_online_instruction_step1">Enter Danamon Online Banking User ID and Password and select the source of fund</string>
     <string name="danamon_online_instruction_step2">Check detail transaction and enter Token Code and klik <b>Next</b>.</string>
@@ -891,4 +896,11 @@
     <string name="pay_without_fiesta_poin">Pay Without Fiestapoin</string>
     <string name="payment_instruction">Payment Instruction %1$s</string>
     <string name="instruction_atm_with">ATM with %1$s logo</string>
+    <string name="bank_code">Bank Code</string>
+    <string name="text_bank_code_here">BNI (009)</string>
+
+    <string name="minutes">minutes</string>
+    <string name="minute">minute</string>
+    <string name="seconds">seconds</string>
+    <string name="second">second</string>
 </resources>
