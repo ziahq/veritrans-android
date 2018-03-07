@@ -37,8 +37,18 @@ public class PromosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void setData(List<Promo> promos) {
         if (promos != null && !promos.isEmpty()) {
+
             this.promos.clear();
             this.promos.addAll(promos);
+
+            if (promos.size() == 1) {
+                Promo promo = promos.get(0);
+                if (promo != null && listener != null) {
+                    promo.setSelected(true);
+                    listener.onPromoSelected(promo);
+                }
+            }
+
             notifyDataSetChanged();
         }
     }
